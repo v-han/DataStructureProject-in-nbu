@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>src/cities.csv</file>
+        <file>src/edges.csv</file>
+    </qresource>
+</RCC>
