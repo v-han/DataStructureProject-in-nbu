@@ -112,9 +112,14 @@ void Graph::drawPoint(QGraphicsScene *Scene)
 
     MapEdge();
 
+    QPen Pen(QColor("#005BBB"));
+    Pen.setWidth(3);
+    QBrush Brush(QColor("#8EC9FF"));
+
     double LocX,LocY;
     QString CityName;
     double padding = 50;
+
     for (int i = 0;i < length;i++)
     {
         LocX = Cities[i].Loc_x;
@@ -125,11 +130,16 @@ void Graph::drawPoint(QGraphicsScene *Scene)
         LocX = padding + (LocX - MinX) / (MaxX - MinX) * (748 - 2 * padding);
         LocY = padding + (1 - (LocY - MinY) / (MaxY - MinY)) * (498 - 2 * padding);
 
-        Scene->addEllipse(LocX - 15, LocY - 15, 30, 30, QPen(Qt::black), QBrush(Qt::cyan));
+        Scene->addEllipse(LocX - 15, LocY - 15, 30, 30, Pen, Brush);
         Scene->addText(CityName)->setPos(LocX - 15, LocY - 12);
     }
 
     //画出边
+    QPen railPen(QColor("#555555"));
+    railPen.setWidth(2);
+    railPen.setCapStyle(Qt::RoundCap);
+    railPen.setJoinStyle(Qt::RoundJoin);
+
     length = Edges.size();
     double LocX_end,LocY_end;
     for (int i = 0;i < length;i++)
@@ -145,7 +155,7 @@ void Graph::drawPoint(QGraphicsScene *Scene)
         LocX_end = padding + (LocX_end - MinX) / (MaxX - MinX) * (748 - 2 * padding);
         LocY_end = padding + (1 - (LocY_end - MinY) / (MaxY - MinY)) * (498 - 2 * padding);
 
-        Scene->addLine(LocX, LocY, LocX_end, LocY_end, QPen(Qt::black));
+        Scene->addLine(LocX, LocY, LocX_end, LocY_end, railPen);
         Scene->addText(QString::number(Edges[i].weidgt))->setPos((LocX + LocX_end) / 2,(LocY + LocY_end) / 2);
     }
 }
@@ -232,7 +242,7 @@ std::vector<int> Graph::ShortestPath(int src, int dst, int &outDist)
 }
 
 //外部调用方法
-void Graph::PathSearch(QComboBox *BeginPoint, QComboBox *EndPoint, QTextBrowser *Path, QTextBrowser *Long)
+void Graph::PathSearch(QComboBox *BeginPoint, QComboBox *EndPoint, QTextBrowser *Path, QTextBrowser *Long, QGraphicsScene *Scene)
 {
     int BeginIndex = FindCityIndex(BeginPoint->currentText());
     int Endindex = FindCityIndex(EndPoint->currentText());
@@ -253,8 +263,25 @@ void Graph::PathSearch(QComboBox *BeginPoint, QComboBox *EndPoint, QTextBrowser 
     Path->setText(str);
     Long->setText(QString("总距离：%1").arg(dist));
 
-    for (int index : path)
+    QPen Pen(Qt::red);
+    Pen.setWidth(4);
+    double LocX_tmp, LocY_tmp;
+    double padding = 50;
+    int length = path.size();
+    for (int i = 0;i < length;i++)
     {
 
+        double LocX = Cities[path[i]].Loc_x;
+        double LocY = Cities[path[i]].Loc_y;
+        LocX = padding + (LocX - MinX) / (MaxX - MinX) * (748 - 2 * padding);
+        LocY = padding + (1 - (LocY - MinY) / (MaxY - MinY)) * (498 - 2 * padding);
+
+        if (i)
+        {
+            Scene->addLine(LocX, LocY, LocX_tmp, LocY_tmp, Pen);
+        }
+
+        LocX_tmp = LocX;
+        LocY_tmp = LocY;
     }
 }

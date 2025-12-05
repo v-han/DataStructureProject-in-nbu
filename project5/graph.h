@@ -36,7 +36,7 @@ public:
     Graph();
     void addPoint(QComboBox *BeginPoint, QComboBox *EndPoint);
     void drawPoint(QGraphicsScene *Scene);
-    void PathSearch(QComboBox *BeginPoint, QComboBox *EndPoint, QTextBrowser *Path, QTextBrowser *Long);
+    void PathSearch(QComboBox *BeginPoint, QComboBox *EndPoint, QTextBrowser *Path, QTextBrowser *Long, QGraphicsScene *Scene);
 
 
 private:

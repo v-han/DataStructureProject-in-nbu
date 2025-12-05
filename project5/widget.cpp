@@ -31,5 +31,7 @@ void Widget::drawPoint()
 
 void Widget::PathSearch()
 {
-    graph.PathSearch(ui->BeginPoint, ui->EndPoint, ui->textBrowserPath, ui->textBrowserLong);
+    graph.drawPoint(Scene);
+    graph.PathSearch(ui->BeginPoint, ui->EndPoint, ui->textBrowserPath, ui->textBrowserLong, Scene);
+    ui->graphicsView->setScene(Scene);
 }
