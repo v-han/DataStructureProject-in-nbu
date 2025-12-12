@@ -1,4 +1,7 @@
 # DataStructureProject-in-nbu
+数据结构的实验作业
+
+我只是一个垃圾,这里是我写的石山代码,有借助AI写的。
 
 ## project1
 采用VC++/Python语言实现一个动态链表，用于保存多个好友的信息。
